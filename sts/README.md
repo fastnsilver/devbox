@@ -16,11 +16,11 @@ This Docker container is based upon the excellent [work](http://pelle.io/deliver
 Download and install [Boot2Docker](https://github.com/boot2docker/windows-installer/releases/download/v1.1.1/docker-install.exe)
 
 ### Mac OS X
-Install [Homebrew](
+Install [Homebrew](http://brew.sh/)
 
 * Open Terminal and cut-and-paste the following
 
-    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+    `ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"`
 
 Install Boot2Docker with
 
