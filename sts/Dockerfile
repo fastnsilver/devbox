@@ -3,7 +3,7 @@
 # Credit (and inspiration) for this image goes out Christian Pelster
 # @see http://pelle.io/delivering-gui-applications-with-docker/
 
-FROM     phusion/base-image
+FROM     phusion/baseimage
 MAINTAINER Chris Phillipson <fastnsilver@gmail.com>
 
 # Make sure the package repository is up to date
