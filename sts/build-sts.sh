@@ -9,4 +9,4 @@ if [ "$(docker run busybox echo 'test')" != "test" ]; then
   fi
 fi
 
-$SUDO docker build -t fns/sts-base 
+$SUDO docker build -t fans/sts-base . 
