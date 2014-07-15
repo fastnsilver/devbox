@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # docker image to use
-DOCKER_IMAGE_NAME="fns/sts-base"
+DOCKER_IMAGE_NAME="fans/sts-base"
 
 # local name for the container
 DOCKER_CONTAINER_NAME="sts-base"
@@ -84,5 +84,5 @@ SSH_PORT=$(echo $SSH_URL | awk -F  ":" '/1/ {print $2}')
 
 echo "ssh running at ${SSH_INTERFACE}:${SSH_PORT}"
 
-ssh -i ${SSH_KEY_FILE_PRIVATE} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -Y -X root@${SSH_INTERFACE} -p ${SSH_PORT} sts-bundle/sts-3.6.0.RELEASE/STS -data workspace
+ssh -i ${SSH_KEY_FILE_PRIVATE} -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -Y -X root@${SSH_INTERFACE} -p ${SSH_PORT} sts/STS -data workspace
 rm -f ${SSH_KEY_FILE_PRIVATE}
