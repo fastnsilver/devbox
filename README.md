@@ -11,4 +11,7 @@ Standing on the shoulders of giants, this project aims to collect and compose Do
 
 * [SpringSource ToolSuite](sts/README.md)
 
+## Roadmap
+
+* Mix-in scripted Eclipse plugin provisioning employing [Eclipse Auto-Install](https://github.com/kutschkem/Eclipse-Autoinstall)
 
