@@ -2,13 +2,14 @@
 
 ## Overview
 
-This Docker container is based upon the excellent [work](http://pelle.io/delivering-gui-applications-with-docker/) done by Christian Pelster.
+This Docker container is based upon the excellent [work](https://github.com/fcwu/docker-ubuntu-vnc-desktop) done by Doro Wu.
 
 
 ## Container 
 * [Spring Source ToolSuite](http://spring.io/tools/sts) = 3.6.0.RELEASE
-* [Ubuntu](http://www.ubuntu.com/download) = 12.04
+* [Ubuntu](http://www.ubuntu.com/download) = 14.04 (see [phusion/baseimage](http://phusion.github.io/baseimage-docker/))
 * Oracle [JDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) = 8
+* [noVNC](http://kanaka.github.io/noVNC/screenshots.html) 
 
 
 ## Requirements 
@@ -57,9 +58,19 @@ Run boot2docker with
 
     boot2docker
     git clone https://fastnsilver/devbox.git
-    cd sts
+    cd devbox/sts
     chmod +x *.sh
-    ./get-sts.sh
-    ./build-sts.sh  
-    ./run-sts.sh
+    ./build.sh 
+
+
+## Execution 
+
+### within boot2docker    
     
+    ./run.sh
+
+### from your desktop
+
+Browse to `http://127.0.0.1:6080/vnc.html`
+
+
