@@ -24,8 +24,8 @@ tar -xzvf spring-tool-suite-3.6.0.RELEASE-e4.4-linux-gtk-x86_64.tar.gz
 
 # Fetch noVNC
 # @see http://kanaka.github.io/noVNC/
-wget https://github.com/kanaka/noVNC/archive/master.zip
-unzip -o -q noVNC-master.zip
+curl -L -O https://github.com/kanaka/noVNC/archive/master.zip
+unzip -o -q master.zip
 mv noVNC-master noVNC
 
 # Build docker container

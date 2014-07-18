@@ -4,11 +4,15 @@
 # @see http://stackoverflow.com/questions/16296753/can-you-run-gui-apps-in-a-docker
 # @see https://github.com/fcwu/docker-ubuntu-vnc-desktop
 
-FROM	phusion/base-image
+FROM	phusion/baseimage
 MAINTAINER Chris Phillipson <fastnsilver@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME /root
+
+# Preliminaries
+RUN 	apt-get update -y
+RUN 	apt-get install -y python-software-properties software-properties-common
 
 # Add PPA repo for Oracle JDK as per http://www.webupd8.org/2012/09/install-oracle-java-8-in-ubuntu-via-ppa.html
 RUN 	add-apt-repository ppa:webupd8team/java
@@ -24,17 +28,12 @@ RUN 	apt-get update -y
 RUN 	apt-mark hold initscripts udev plymouth mountall
 RUN 	dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
 
-# Install and setup project dependencies
-RUN 	apt-get install -y curl wget
+# Set locale
 RUN 	locale-gen en_US en_US.UTF-8
-
-# Prepare for Java download
-RUN 	apt-get install -y python-software-properties
-RUN 	apt-get install -y software-properties-common
 
 # Install vnc, xvfb in order to create a 'fake' display and firefox
 RUN apt-get install -y --force-yes --no-install-recommends supervisor \
-        openssh-server pwgen sudo vim-tiny \
+        wget openssh-server pwgen sudo vim-tiny \
         net-tools \
         lxde x11vnc xvfb \
         gtk2-engines-murrine ttf-ubuntu-font-family \
