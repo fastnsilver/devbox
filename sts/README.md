@@ -63,14 +63,39 @@ Run boot2docker with
     ./build.sh 
 
 
-## Execution 
+## Startup 
 
 ### within boot2docker    
     
-    ./run.sh
+    docker run -i -t -p 6080:6080 -P --name sts-base fans/sts-base bash
 
 ### from your desktop
 
 Browse to `http://127.0.0.1:6080/vnc.html`
+Authenticate with password `ubuntu`
+Open STS
 
 
+## Shutdown
+
+### from your desktop
+
+Disconnect
+Close your browser window
+
+### within boot2docker
+
+    docker ps
+    docker stop <cid>
+
+`<cid>` above is the container id of the running container
+
+
+## Screenshots
+
+![Authenticate](images/authenticate.png "Authenticate")
+![Invoke Run](images/invoke-run.png "Invoke Run")
+![Run STS](images/run-STS.png "Run Spring Source Tool Suite")
+![Set workspace location](images/set-STS-workspace.png "Set workspace location")
+![STS](images/STS-in-browser.png "Fully functioning Spring Source Tool Suite in your browser")
+![Disconnect](images/disconnect.png "Disconnect")
