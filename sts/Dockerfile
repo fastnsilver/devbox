@@ -58,9 +58,7 @@ ADD 	sts-bundle/sts-3.6.0.RELEASE /sts/
 ADD 	startup.sh /
 ADD 	supervisord.conf /
 
-EXPOSE 	6080
-EXPOSE 	5900
-EXPOSE 	22
+EXPOSE 	22 5900 6080
 
 WORKDIR /
 

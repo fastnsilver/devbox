@@ -56,7 +56,7 @@ Run boot2docker with
     
 ## Installation
 
-    boot2docker
+    boot2docker ssh -L 6080:localhost:6080
     git clone https://fastnsilver/devbox.git
     cd devbox/sts
     chmod +x *.sh

@@ -9,14 +9,6 @@ if [ "$(docker run busybox echo 'test')" != "test" ]; then
   fi
 fi
 
-# Add nsenter
-# @see https://github.com/jpetazzo/nsenter
-DOCKER_ENTER_FN_EXISTS=sed -n '/docker-enter()/=' .ashrc
-
-if [ -z "$DOCKER_ENTER_FN_EXISTS" ]; then
-	sed '$ a\docker-enter() { boot2docker ssh -t "[ -f /var/lib/boot2docker/nsenter ] || docker run --rm -v /var/lib/boot2docker/:/target jpetazzo/nsenter; sudo /var/lib/boot2docker/docker-enter $@"; }' .ashrc
-fi
-
 # Downloads and unpacks Spring Source Tool Suite
 # for 64-bit *nix
 wget http://download.springsource.com/release/STS/3.6.0/dist/e4.4/spring-tool-suite-3.6.0.RELEASE-e4.4-linux-gtk-x86_64.tar.gz
