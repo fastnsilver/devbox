@@ -72,7 +72,9 @@ Run boot2docker with
 ### from your desktop
 
 Browse to `http://127.0.0.1:6080/vnc.html`
+
 Authenticate with password `ubuntu`
+
 Open STS
 
 
@@ -81,6 +83,7 @@ Open STS
 ### from your desktop
 
 Disconnect
+
 Close your browser window
 
 ### within boot2docker
