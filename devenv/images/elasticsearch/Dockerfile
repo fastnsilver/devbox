@@ -1,4 +1,4 @@
-FROM fns/oracle-java8
+FROM fans/oracle-java8
 
 # elasticsearch
 RUN apt-get update

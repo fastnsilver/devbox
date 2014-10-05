@@ -7,5 +7,5 @@ do
 	cd $dir &&
 	image_name=${PWD##*/} && # to assign to a variable
 	echo "Building $image_name from $dir" &&
-	docker build -t fns/$image_name .
+	docker build -t fans/$image_name .
 done

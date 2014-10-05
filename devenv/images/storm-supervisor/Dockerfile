@@ -1,4 +1,4 @@
-FROM fns/storm-base
+FROM fans/storm-base
 
 ADD storm.yaml /storm/conf/storm.yaml
 ADD storm-supervisor-start.sh storm/storm-supervisor-start.sh

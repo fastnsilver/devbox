@@ -1,4 +1,4 @@
-FROM fns/storm-base
+FROM fans/storm-base
 
 ADD storm.yaml /storm/conf/storm.yaml
 ADD storm_util.sh /storm/storm_util.sh

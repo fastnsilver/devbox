@@ -1,3 +1,3 @@
 #!/bin/bash
 
-sudo docker build -t fns/${PWD##*/} .
+sudo docker build -t fans/${PWD##*/} .

@@ -7,5 +7,5 @@ do
 	cd $dir &&
 	image_name=${PWD##*/} && # to assign to a variable
 	echo "Pushing $image_name" &&
-	docker push fns/$image_name
+	docker push fans/$image_name
 done

@@ -46,6 +46,11 @@ Vagrant::Config.run do |config|
   #Storm UI
   config.vm.forward_port 8081, 8081
 
+  #rabbitmq
+  config.vm.forward_port 15672, 15672
+  config.vm.forward_port 4369, 4369
+  config.vm.forward_port 5672, 5672
+
   #riemann
   config.vm.forward_port 5555, 5555, protocol: 'tcp'
   config.vm.forward_port 5555, 5555, protocol: 'udp'

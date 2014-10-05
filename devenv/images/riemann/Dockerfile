@@ -1,4 +1,4 @@
-FROM fns/oracle-java8
+FROM fans/oracle-java8
 
 RUN apt-get update
 RUN apt-get install -y wget bzip2

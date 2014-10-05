@@ -1,7 +1,7 @@
 #/bin/bash
 set -e
 
-### FIXME once all fns/ docker images build successfully replace relateiq/ image refs below
+### FIXME once all fans/ docker images build successfully replace relateiq/ image refs below
 
 DIR="$( cd "$( dirname "$0" )" && pwd )"
 APPS=${APPS:-/mnt/apps}
@@ -99,6 +99,14 @@ start(){
 		relateiq/kafka)
 	echo "Started KAFKA in container $KAFKA"
 
+	RABBITMQ=$(docker run \
+		-d \
+		-p 5672:5672 \
+		-p 15672:15672 \
+		mikaelhg/docker-rabbitmq)
+	echo "Started RABBITMQ in container $RABBITMQ"
+
+
 	DOCKERUI=$(docker run \
 		-d \
 		-p 9000:9000 \
@@ -132,6 +140,7 @@ update(){
 	docker pull relateiq/elasticsearch
 	docker pull relateiq/mongo
 	docker pull relateiq/kafka
+	docker pull mikaelhg/docker-rabbitmq
 
 	docker build -t crosbymichael/dockerui github.com/crosbymichael/dockerui
 
