@@ -9,4 +9,3 @@ HOST=`hostname`
 echo "127.0.0.1 $HOST" >> /etc/hosts
 
 /opt/cassandra/bin/cassandra -f
-

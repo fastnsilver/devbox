@@ -1,4 +1,5 @@
 FROM fans/oracle-java8
+MAINTAINER Chris Phillipson fastnsilver@gmail.com
 
 # apt
 RUN apt-get update

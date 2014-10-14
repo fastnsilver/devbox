@@ -1,11 +1,17 @@
 #/bin/bash
 set -e
 
-### FIXME once all fans/ docker images build successfully replace relateiq/ image refs below
-
 DIR="$( cd "$( dirname "$0" )" && pwd )"
 APPS=${APPS:-/mnt/apps}
 
+buildz(){
+	echo "Building all docker containers:"
+	for i in "oracle-java8" "scala" "ansible" "cassandra" "dynamodb" "zookeeper" "elasticsearch" "kafka" "logstash" "mongo" "redis" "riemann" "storm-base" "storm-nimbus" "storm-supervisor" "storm-ui";
+	do
+		echo "- fans/$i"
+		docker build -t fans/$i /vagrant/images/$i
+  done
+}
 
 killz(){
 	echo "Killing all docker containers:"
@@ -36,9 +42,10 @@ start(){
 	ZOOKEEPER=$(docker run \
 		-d \
 		-p 2181:2181 \
+		-v $APPS/zookeeper/data:/data \
 		-v $APPS/zookeeper/logs:/logs \
 		--name zookeeper \
-		relateiq/zookeeper)
+		fans/zookeeper)
 	echo "Started ZOOKEEPER in container $ZOOKEEPER"
 
 	mkdir -p $APPS/redis/data
@@ -48,7 +55,7 @@ start(){
 		-v $APPS/redis/data:/data \
 		-v $APPS/redis/logs:/logs \
 		-d \
-		relateiq/redis)
+		fans/redis)
 	echo "Started REDIS in container $REDIS"
 
 	mkdir -p $APPS/cassandra/data
@@ -62,8 +69,18 @@ start(){
 		-v $APPS/cassandra/data:/data \
 		-v $APPS/cassandra/logs:/logs \
 		-d \
-		relateiq/cassandra)
+		fans/cassandra)
 	echo "Started CASSANDRA in container $CASSANDRA"
+
+	mkdir -p $APPS/dynamodb/data
+	mkdir -p $APPS/dynamodb/logs
+	DYNAMODB=$(docker run \
+		-p 8000:8000 \
+		-d \
+		-v $APPS/dynamodb/data:/data \
+		-v $APPS/dynamodb/logs:/logs \
+		fans/dynamodb)
+	echo "Started DYNAMODB in container $DYNAMODB"
 
 	mkdir -p $APPS/elasticsearch/data
 	mkdir -p $APPS/elasticsearch/logs
@@ -73,18 +90,35 @@ start(){
 		-v $APPS/elasticsearch/data:/data \
 		-v $APPS/elasticsearch/logs:/logs \
 		-d \
-		relateiq/elasticsearch)
+		fans/elasticsearch)
 	echo "Started ELASTICSEARCH in container $ELASTICSEARCH"
+
+	## FIXME Broken; won't start-up
+
+	#LOGSTASH=$(docker run \
+	#	-p 3377:3377 \
+	#	-p 3374:3374 \
+	#	-d \
+	#	fans/logstash)
+	#echo "Started LOGSTASH in container $LOGSTASH"
+
+	## FIXME Restore Kibana when Dockerfile builds successfully
+
+	#KIBANA=$(docker run \
+	#	-p 9292:9292
+	#	-d \
+	#	fans/kibana)
+	#echo "Started KIBANA in container $KIBANA"
 
 	mkdir -p $APPS/mongo/data
 	mkdir -p $APPS/mongo/logs
 	MONGO=$(docker run \
 		-p 27017:27017 \
 		-p 28017:28017 \
-		-v $APPS/mongo/data:/data/lucid_prod \
+		-v $APPS/mongo/data:/data \
 		-v $APPS/mongo/logs:/logs \
 		-d \
-		relateiq/mongo)
+		fans/mongo)
 	echo "Started MONGO in container $MONGO"
 
 	mkdir -p $APPS/kafka/data
@@ -96,16 +130,33 @@ start(){
 		-v $APPS/kafka/logs:/logs \
 		--name kafka \
 		--link zookeeper:zookeeper \
-		relateiq/kafka)
+		fans/kafka)
 	echo "Started KAFKA in container $KAFKA"
 
+	mkdir -p $APPS/rabbitmq/data
+	mkdir -p $APPS/rabbitmq/logs
 	RABBITMQ=$(docker run \
 		-d \
 		-p 5672:5672 \
 		-p 15672:15672 \
+		-v $APPS/rabbitmq/data:/data \
+		-v $APPS/rabbitmq/logs:/logs \
 		mikaelhg/docker-rabbitmq)
 	echo "Started RABBITMQ in container $RABBITMQ"
 
+	mkdir -p $APPS/riemann/data
+	mkdir -p $APPS/riemann/logs
+	RIEMANN=$(docker run \
+		-d \
+		-p 5555:5555 \
+		-p 5556:5556 \
+		-p 5557:5557 \
+		-v $APPS/riemann/data:/data \
+		-v $APPS/riemann/logs:/logs \
+		fans/riemann)
+	echo "Started RIEMANN in container $RIEMANN"
+
+	## TODO Add storm complement of containers
 
 	DOCKERUI=$(docker run \
 		-d \
@@ -120,35 +171,20 @@ start(){
 
 update(){
 	apt-get update
-	apt-get -y install docker.io
-	ln -sf /usr/bin/docker.io /usr/local/bin/docker
-  sed -i '$acomplete -F _docker docker' /etc/bash_completion.d/docker.io
-	apt-get -y install apt-transport-https
-	apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-	sh -c "echo deb https://get.docker.io/ubuntu docker main\ > /etc/apt/sources.list.d/docker.list"
-	apt-get update
-	apt-get -y install lxc-docker
-	apt-get -y install apparmor
 	docker version
 
-	update-rc.d docker.io defaults
-	cp /vagrant/etc/docker.io.conf /etc/init/docker.io.conf
+	update-rc.d docker defaults
+	cp /vagrant/etc/docker.conf /etc/init/docker.conf
 
-	docker pull relateiq/zookeeper
-	docker pull relateiq/redis
-	docker pull relateiq/cassandra
-	docker pull relateiq/elasticsearch
-	docker pull relateiq/mongo
-	docker pull relateiq/kafka
 	docker pull mikaelhg/docker-rabbitmq
-
 	docker build -t crosbymichael/dockerui github.com/crosbymichael/dockerui
-
+	buildz
 }
 
 case "$1" in
 	restart)
 		killz
+		rmz
 		start
 		;;
 	start)

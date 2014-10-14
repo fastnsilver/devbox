@@ -15,12 +15,22 @@ Vagrant::Config.run do |config|
   #dockerui
   config.vm.forward_port 9000, 9000
 
+  #dynamodb
+  config.vm.forward_port 8000, 8000
+
   #redis
   config.vm.forward_port 6379, 6379
 
   #elasticsearch
   config.vm.forward_port 9200, 9200
   config.vm.forward_port 9300, 9300
+
+  #logstash
+  #config.vm.forward_port 3377, 3377
+  #config.vm.forward_port 3374, 3374
+
+  # kibana
+  #config.vm.forward_port 9292, 9292
 
   #cassandra
   config.vm.forward_port 7000, 7000
@@ -40,11 +50,8 @@ Vagrant::Config.run do |config|
   #zookeeper
   config.vm.forward_port 2181, 2181
 
-  #jetty
-  config.vm.forward_port 8080, 8080
-
-  #Storm UI
-  config.vm.forward_port 8081, 8081
+  #storm ui
+  #config.vm.forward_port 8081, 8081
 
   #rabbitmq
   config.vm.forward_port 15672, 15672

@@ -1,4 +1,5 @@
 FROM fans/storm-base
+MAINTAINER Chris Phillipson fastnsilver@gmail.com
 
 ADD storm.yaml /storm/conf/storm.yaml
 ADD storm_util.sh /storm/storm_util.sh

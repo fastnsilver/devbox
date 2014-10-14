@@ -16,6 +16,9 @@ case "$1" in
 	up)
 		vagrant up
 		;;
+	halt)
+	  vagrant halt
+		;;
 	update)
 		git pull
 		vagrant ssh -c "sudo /vagrant/bin/devenv-inner.sh update"
@@ -26,13 +29,3 @@ case "$1" in
 esac
 
 cd - > /dev/null
-
-# echo "waiting for elasticsearch to start"
-# until curl http://localhost:9200 > /dev/null 2>&1; do
-# 	echo -n .
-# 	sleep 1
-# done
-
-# # todo: only do this if it hasn't been done
-# echo "bootstrap elasticsearch"
-# $RIQ/scripts/dev_elasticsearch_bootstrap.sh

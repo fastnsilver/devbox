@@ -1,19 +1,20 @@
-FROM fans/oracle-java8
+FROM fans/scala
+MAINTAINER Chris Phillipson fastnsilver@gmail.com
 
 RUN apt-get update
 RUN apt-get install -y git curl build-essential make gcc wget
 
 ENV VERSION 0.8.1.1
-RUN wget http://www.alliedquotes.com/mirrors/apache/incubator/kafka/kafka-$VERSION-incubating/kafka-$VERSION-incubating-src.tgz
-RUN tar xzvf kafka-$VERSION-incubating-src.tgz
-RUN ln -sfn kafka-$VERSION-incubating kafka
-RUN cd kafka && ./sbt update
-RUN cd kafka && ./sbt package
+RUN wget http://apache.mirrors.pair.com/kafka/$VERSION/kafka_2.10-$VERSION.tgz && \
+    tar xzvf kafka_2.10-$VERSION.tgz && \
+    rm -f kafka_2.10-$VERSION.tgz && \
+    mv kafka_2.10-$VERSION kafka && \
+    mv kafka /opt/kafka && \
+    cd /opt/kafka && sbt update && sbt package
 
 RUN mkdir /data && mkdir /logs
 
-ADD server.properties kafka/config/server.properties
-ADD kafka-start.sh kafka/kafka-start.sh
+ADD kafka-start.sh /opt/kafka/kafka-start.sh
 
 ENV JMX_PORT 7203
 
@@ -25,4 +26,4 @@ EXPOSE 9092
 # jmx
 EXPOSE 7203
 
-CMD ["kafka/kafka-start.sh"]
+CMD ["/opt/kafka/kafka-start.sh"]

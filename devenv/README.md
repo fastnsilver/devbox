@@ -45,7 +45,8 @@ vagrant reload
 
 ## Update devenv
 
-This will pull all the images from the server and update Docker's configuration for DockerUI.
+This will build and pull all the images from the server and update Docker's configuration for DockerUI.
+(Recommendation: take an extra-long coffee-break).
 
 ```
 ./bin/devenv update
@@ -68,9 +69,7 @@ Starting applications...
 Started ZOOKEEPER in container aea8c4ea668d2cca454ff93e423f976119dfda1d060b328bbb1d5c95b68416c9
 Started REDIS in container 7ad7e9d22e68a22a8fe9918a23373d019f5f544ed2e60242570bf6491786861f
 Started CASSANDRA in container 6ecd409960847d1c949ffc47faf06f0feb17d8b3580a0b00ab358466d33210ad
-Started ELASTICSEARCH in container bfe804b795e5c775526cdb001827cb26440aafc791d2a044eb09f07beac3de1a
-Started MONGO in container 3ac7628858fae849230e6abaeac47c69d201f1784a0fe31f52ec2e5b99e07e62
-Started KAFKA in container 4d4d67fd430185bf3d20fc5afd78988d79700128ed556f4d49a8c4c0ad681ad7
+...
 Started DOCKERUI in container 5c24438a0ffeb9b4c0c8196e6a951d44c0afe2c63aec3228499e8af403ea8944
 Connection to 127.0.0.1 closed.
 ```
