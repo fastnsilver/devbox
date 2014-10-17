@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM phusion/baseimage
 MAINTAINER Chris Phillipson fastnsilver@gmail.com
 
 ADD ansible-trusty.list /etc/apt/sources.list.d/

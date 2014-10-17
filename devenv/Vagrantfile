@@ -39,6 +39,9 @@ Vagrant::Config.run do |config|
   config.vm.forward_port 9160, 9160
   config.vm.forward_port 9042, 9042
 
+  #opscenter
+  config.vm.forward_port 8888, 8888
+
   #mongo
   config.vm.forward_port 27017, 27017
   config.vm.forward_port 28017, 28017

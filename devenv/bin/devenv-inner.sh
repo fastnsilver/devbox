@@ -6,11 +6,61 @@ APPS=${APPS:-/mnt/apps}
 
 buildz(){
 	echo "Building all docker containers:"
-	for i in "oracle-java8" "scala" "ansible" "cassandra" "dynamodb" "zookeeper" "elasticsearch" "kafka" "logstash" "mongo" "redis" "riemann" "storm-base" "storm-nimbus" "storm-supervisor" "storm-ui";
+	for i in "oracle-java8" "tomcat8" "scala" "ansible" "cassandra" "opscenter" "helenos" "dynamodb" "zookeeper" "elasticsearch" "kafka" "logstash" "mongo" "redis" "riemann" "storm-base" "storm-nimbus" "storm-supervisor" "storm-ui";
 	do
 		echo "- fans/$i"
 		docker build -t fans/$i /vagrant/images/$i
   done
+}
+
+cassz() {
+  OPSCENTER=$(docker run \
+	  -d \
+		--name opscenter \
+		-p 8888:8888 \
+		fans/opscenter)
+	echo "Started OPSCENTER in container $OPSCENTER"
+
+  sleep 10
+
+  OPS_IP=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' opscenter)
+
+	CASSANDRA=$(docker run \
+	  -d \
+		--name cass1 \
+		-e OPS_IP=$OPS_IP \
+		fans/cassandra)
+	echo "Started CASSANDRA NODE cass1 in container $CASSANDRA"
+
+	sleep 20
+	SEED_IP=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' cass1)
+
+	for name in "cass2" "cass3" "cass4" "cass5"; do
+		CASSANDRA=$(docker run \
+		  -d \
+			--name $name \
+			-e SEED=$SEED_IP \
+			-e OPS_IP=$OPS_IP \
+			fans/cassandra)
+    echo "Started CASSANDRA NODE $name in container $CASSANDRA"
+    sleep 20
+  done
+
+  echo "Registering cluster with OpsCenter"
+  curl \
+    http://$OPS_IP:8888/cluster-configs \
+	  -X POST \
+	  -d \
+	  "{
+	      \"cassandra\": {
+	        \"seed_hosts\": \"$SEED_IP\"
+	      },
+	      \"cassandra_metrics\": {},
+	      \"jmx\": {
+	        \"port\": \"7199\"
+	      }
+	  }" > /dev/null
+	echo "Go to http://$OPS_IP:8888/"
 }
 
 killz(){
@@ -58,19 +108,7 @@ start(){
 		fans/redis)
 	echo "Started REDIS in container $REDIS"
 
-	mkdir -p $APPS/cassandra/data
-	mkdir -p $APPS/cassandra/logs
-	CASSANDRA=$(docker run \
-		-p 7000:7000 \
-		-p 7001:7001 \
-		-p 7199:7199 \
-		-p 9160:9160 \
-		-p 9042:9042 \
-		-v $APPS/cassandra/data:/data \
-		-v $APPS/cassandra/logs:/logs \
-		-d \
-		fans/cassandra)
-	echo "Started CASSANDRA in container $CASSANDRA"
+	cassz
 
 	mkdir -p $APPS/dynamodb/data
 	mkdir -p $APPS/dynamodb/logs
