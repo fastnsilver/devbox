@@ -20,31 +20,26 @@ cassz() {
 		-p 8888:8888 \
 		fans/opscenter)
 	echo "Started OPSCENTER in container $OPSCENTER"
-
-  sleep 10
+  sleep 15
 
   OPS_IP=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' opscenter)
+	echo "- OPSCENTER IP is: $OPS_IP."
 
 	CASSANDRA=$(docker run \
 	  -d \
 		--name cass1 \
 		-e OPS_IP=$OPS_IP \
+		-p 7000:7000 \
+		-p 7001:7001 \
+		-p 7199:7199 \
+		-p 9042:9042 \
+		-p 9160:9160 \
 		fans/cassandra)
 	echo "Started CASSANDRA NODE cass1 in container $CASSANDRA"
+	sleep 15
 
-	sleep 20
 	SEED_IP=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' cass1)
-
-	for name in "cass2" "cass3" "cass4" "cass5"; do
-		CASSANDRA=$(docker run \
-		  -d \
-			--name $name \
-			-e SEED=$SEED_IP \
-			-e OPS_IP=$OPS_IP \
-			fans/cassandra)
-    echo "Started CASSANDRA NODE $name in container $CASSANDRA"
-    sleep 20
-  done
+	echo "- CASSANDRA NODE cass1 IP is: $SEED_IP."
 
   echo "Registering cluster with OpsCenter"
   curl \
@@ -60,7 +55,6 @@ cassz() {
 	        \"port\": \"7199\"
 	      }
 	  }" > /dev/null
-	echo "Go to http://$OPS_IP:8888/"
 }
 
 killz(){
@@ -78,11 +72,9 @@ rmz(){
 }
 
 stop(){
-	echo "Stopping all docker containers:"
-	docker ps
-	ids=`docker ps | tail -n +2 |cut -d ' ' -f 1`
-	echo $ids | xargs docker stop
-	echo $ids | xargs docker rm
+	echo "Stopping all docker containers..."
+	killz
+	rmz
 }
 
 start(){

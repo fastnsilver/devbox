@@ -70,15 +70,10 @@ Started ZOOKEEPER in container 4436ec3749afe61b7cd90f8e9d883070dfa18b755a6a480cf
 Started REDIS in container f3b143b04723508c6dd4b6aed3d0a1e99545551bd5a840dd33fadc438a8be65c
 Started OPSCENTER in container 2f928f697813ac1307eba6b5550bfbf9a112e31d5fa360142364b67c2c7c3e6e
 Started CASSANDRA NODE cass1 in container b363eef7badde5c4055327d3777d3361dfebca04e6d8b1c67c3857b08c96daf1
-Started CASSANDRA NODE cass2 in container 535da93ca6db0b3a666edc51eba6fc279716a244d1d95a1fe94511264aaec0e3
-Started CASSANDRA NODE cass3 in container 70b6f66eeee9c2e4930fa4bb45db7503b2a27f1d02d29eaf2fe7ee9895507d2e
-Started CASSANDRA NODE cass4 in container 7d016779cdacfa3c5f71840d28054026e88d201531cf3b9865638fc99bb06d25
-Started CASSANDRA NODE cass5 in container 8e79b1dd27850ffb11f1e03a92ec7402aa1a698fafdf6a9fd3df6ab6f1edf491
 Registering cluster with OpsCenter
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100   171    0    14  100   157      0     10  0:00:15  0:00:14  0:00:01     0
-Go to http://172.17.0.112:8888/
 Started DYNAMODB in container 459d5083ef03fb9c487131f5768c6221e6271b1037b695dc3699b670f894ec76
 Started ELASTICSEARCH in container 7812da86225500c32367bcff453a9e482dd17a28f9bd8be22e990ecda5c6d15b
 Started MONGO in container e549a9b742d67795a2c7f448ebaa12445fbd9c5d8dc450a883214f2c74df5ca0
