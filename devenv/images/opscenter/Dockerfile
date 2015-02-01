@@ -6,7 +6,7 @@ RUN \
   apt-get update; \
   apt-get install -y python wget;
 
-ENV VERSION 5.0.1
+ENV VERSION 5.0.2
 # Download and extract OpsCenter
 RUN \
   mkdir /opt/opscenter; \
