@@ -4,7 +4,7 @@ MAINTAINER Chris Phillipson fastnsilver@gmail.com
 RUN apt-get update
 RUN apt-get install -y git curl build-essential make gcc wget
 
-ENV VERSION 2.8.17
+ENV VERSION 2.8.19
 RUN wget http://download.redis.io/releases/redis-$VERSION.tar.gz
 RUN tar xzf redis-$VERSION.tar.gz
 RUN cd redis-$VERSION && make
