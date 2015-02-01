@@ -11,7 +11,7 @@ RUN easy_install pip
 #supervisor
 RUN pip install supervisor
 
-ENV VERSION 2.6.4
+ENV VERSION 2.6.7
 RUN wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-$VERSION.tgz
 RUN tar xzvf mongodb-linux-x86_64-$VERSION.tgz
 RUN ln -sfn mongodb-linux-x86_64-$VERSION mongodb
