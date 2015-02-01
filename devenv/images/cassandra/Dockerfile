@@ -4,14 +4,14 @@ MAINTAINER Chris Phillipson fastnsilver@gmail.com
 RUN apt-get update
 RUN apt-get install -y wget python lsof
 
-ENV CASSANDRA_VERSION 2.1.0
+ENV CASSANDRA_VERSION 2.1.2
 # Download and extract Cassandra
 RUN cd /opt && wget http://apache.mirrors.pair.com/cassandra/$CASSANDRA_VERSION/apache-cassandra-$CASSANDRA_VERSION-bin.tar.gz && \
     tar zxf apache-cassandra-*.tar.gz && \
     rm /opt/*.tar.gz && \
     mv /opt/apache-cassandra-* /opt/cassandra
 
-ENV DATASTAX_VERSION 5.0.1
+ENV DATASTAX_VERSION 5.0.2
 # Download and extract DataStax OpsCenter Agent
 RUN cd /opt && wget http://downloads.datastax.com/community/datastax-agent-$DATASTAX_VERSION.tar.gz && \
     tar zxf datastax-agent-*.tar.gz && \
