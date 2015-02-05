@@ -6,7 +6,7 @@ APPS=${APPS:-/mnt/apps}
 
 buildz(){
 	echo "Building all docker containers:"
-	for i in "oracle-java8" "tomcat8" "scala" "ansible" "cassandra" "opscenter" "helenos" "dynamodb" "zookeeper" "elasticsearch" "kafka" "logstash" "mongo" "redis" "riemann" "storm-base" "storm-nimbus" "storm-supervisor" "storm-ui";
+	for i in "oracle-java8" "tomcat8" "scala" "ansible" "cassandra" "opscenter" "dynamodb" "zookeeper" "elasticsearch" "kafka" "logstash" "mongo" "redis" "riemann" "storm-base" "storm-nimbus" "storm-supervisor" "storm-ui";
 	do
 		echo "- fans/$i"
 		docker build -t fans/$i /vagrant/images/$i
