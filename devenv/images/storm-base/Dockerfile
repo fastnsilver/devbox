@@ -19,9 +19,9 @@ RUN cd jzmq && ./autogen.sh && ./configure && make && make install
 
 #storm
 ENV STORM_VERSION 0.9.3
-RUN wget http://apache.mirrors.pair.com/incubator/storm/apache-storm-$STORM_VERSION-incubating/apache-storm-$STORM_VERSION-incubating.tar.gz
+RUN wget http://psg.mtu.edu/pub/apache/storm/apache-storm-$STORM_VERSION/apache-storm-$STORM_VERSION.tar.gz
 RUN tar -xzf apache-storm-*.tar.gz
-RUN ln -sfn apache-storm-$STORM_VERSION-incubating storm
+RUN ln -sfn apache-storm-$STORM_VERSION storm
 
 ADD storm.log.properties /storm/log4j/storm.log.properties
 
